@@ -1,8 +1,9 @@
 import http from 'http';
 import cors from 'cors'
-import express, {Request, Response} from 'express';
+import express, {Request, Response, Router} from 'express';
 
 import {Config} from "./config";
+import {Routes} from "../../infraestructure/handler/router/init";
 
 function index(req: Request, res: Response) {
     res.json({
@@ -15,9 +16,13 @@ function main() {
     const server  = http.createServer(app)
 
     const config = Config.getConfiguration()
+    const router = Router()
 
     app.use(express.json())
     app.use(cors({origin: ['*']}))
+
+    new Routes(router, config)
+    app.use(router)
 
     app.get('/', index)
 
