@@ -1,12 +1,28 @@
-import {IUseCaseFeedback} from "./feedback";
+import {INotifyEmail, IUseCaseFeedback} from "./feedback";
 import {Error, MError} from "../../model/error";
+import {MFeedback} from "../../model/feedback";
 
 export class UseCaseFeedback implements IUseCaseFeedback{
-    sendMail(): MError {
-        console.log('email sending successful')
-        const err = Error.voidError()
-        // const err = new Error(500, 'no se', 'tampoco se')
-        return err
+    static emailNotifier: INotifyEmail
+
+    constructor(emailNotifier: INotifyEmail) {
+        UseCaseFeedback.emailNotifier = emailNotifier
+    }
+
+    async sendNotify(feedback: MFeedback): Promise<any> {
+        try {
+            const info = await UseCaseFeedback.emailNotifier.sendNotify(feedback)
+
+            return [info, Error.voidError()]
+        } catch (e) {
+            const error: MError = {
+                code: 500,
+                message: 'sending email',
+                error: e
+            }
+
+            return ['', error]
+        }
     }
 
 }

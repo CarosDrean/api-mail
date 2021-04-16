@@ -6,6 +6,6 @@ import {RouterFeedback} from "../feedback/router";
 export class Routes {
 
     constructor(router: Router, config: Configuration) {
-        new RouterFeedback(router)
+        new RouterFeedback(router, config)
     }
 }

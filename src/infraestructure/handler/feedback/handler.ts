@@ -3,6 +3,7 @@ import {Request, Response} from "express";
 import {Feedback, MFeedback} from "../../../model/feedback";
 import {IUseCaseFeedback} from "../../../domain/feedback/feedback";
 import {Error, MError} from "../../../model/error";
+import {MResponse} from "../../../model/response";
 
 export class HandlerFeedback {
     private static useCase: IUseCaseFeedback
@@ -11,7 +12,7 @@ export class HandlerFeedback {
         HandlerFeedback.useCase = useCase;
     }
 
-    sendMail(req: Request, res: Response) {
+    async sendMail(req: Request, res: Response) {
         let [item, error] = HandlerFeedback.getDataBody(req.body)
         if (!Error.isVoidError(error)) {
             res.status(400).json(error)
@@ -23,13 +24,18 @@ export class HandlerFeedback {
             return
         }
 
-        error = HandlerFeedback.useCase.sendMail()
-        if (!Error.isVoidError(error)) {
-            res.status(error.code).json(error)
+        const [info, err] = await HandlerFeedback.useCase.sendNotify(item)
+        if (!Error.isVoidError(err)) {
+            res.status(err.code).json(err)
             return
         }
 
-        res.status(200).json('email sending successful')
+        const response: MResponse = {
+            message: 'email sending successful',
+            data: info
+        }
+
+        res.status(200).json(response)
     }
 
     private static getDataBody(item: MFeedback): [MFeedback, MError] {
