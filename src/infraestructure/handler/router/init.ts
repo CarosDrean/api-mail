@@ -4,6 +4,7 @@ import {MConfiguration} from "../../../model/configuration";
 import {RouterFeedback} from "../feedback/router";
 import {RouterMailWeb} from "../mailweb/router";
 import {RouterUser} from "../user/router";
+import {RouterURLCreateUser} from "../urlcreateuser/router";
 
 export class Routes {
 
@@ -11,5 +12,6 @@ export class Routes {
         new RouterFeedback(router, config)
         new RouterMailWeb(router, config)
         new RouterUser(router, config)
+        new RouterURLCreateUser(router, config)
     }
 }
