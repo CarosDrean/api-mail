@@ -12,7 +12,7 @@ export class EmailUser implements INotifyEmailUser {
         EmailUser.config = config;
     }
 
-    sendNotifyNewUser(item: MUser): Promise<any> {
+    async sendNotifyNewUser(item: MUser): Promise<any> {
         const mailConfig = EmailUser.config.mail
 
         const mailOptions = {
@@ -22,7 +22,7 @@ export class EmailUser implements INotifyEmailUser {
             html: NewUserTemplate.template(item)
         }
 
-        return Promise.resolve(undefined);
+        return await Nodemailer.transporter(EmailUser.config).sendMail(mailOptions)
     }
 
     async sendNotifyResetPassword(item: MUser): Promise<any> {
