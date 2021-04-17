@@ -5,6 +5,6 @@ export interface IUseCaseFeedback {
     sendNotify(feedback: MFeedback): Promise<[any, MError]>
 }
 
-export interface INotifyEmail {
+export interface INotifyEmailFeedback {
     sendNotify(item: MFeedback): Promise<any>
 }
