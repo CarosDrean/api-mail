@@ -1,11 +1,11 @@
 import {Router} from "express";
 
-import {Configuration} from "../../../model/configuration";
+import {MConfiguration} from "../../../model/configuration";
 import {RouterFeedback} from "../feedback/router";
 
 export class Routes {
 
-    constructor(router: Router, config: Configuration) {
+    constructor(router: Router, config: MConfiguration) {
         new RouterFeedback(router, config)
     }
 }

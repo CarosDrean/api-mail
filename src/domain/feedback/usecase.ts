@@ -9,7 +9,7 @@ export class UseCaseFeedback implements IUseCaseFeedback{
         UseCaseFeedback.emailNotifier = emailNotifier
     }
 
-    async sendNotify(feedback: MFeedback): Promise<any> {
+    async sendNotify(feedback: MFeedback): Promise<[any, MError]> {
         try {
             const info = await UseCaseFeedback.emailNotifier.sendNotify(feedback)
 

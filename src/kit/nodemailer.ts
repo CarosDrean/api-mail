@@ -1,10 +1,10 @@
 import nodemailer from 'nodemailer'
 import Mail from "nodemailer/lib/mailer"
 
-import {Configuration} from "../model/configuration";
+import {MConfiguration} from "../model/configuration";
 
 export class Nodemailer {
-    static transporter(config: Configuration): Mail {
+    static transporter(config: MConfiguration): Mail {
         return nodemailer.createTransport({
             service: config.nodemailer.service,
             auth: {

@@ -1,13 +1,13 @@
 import {INotifyEmail} from "../../../domain/feedback/feedback";
 import {MFeedback} from "../../../model/feedback";
-import {Configuration} from "../../../model/configuration";
+import {MConfiguration} from "../../../model/configuration";
 import {FeedbackTemplate} from "./templates/feedback";
 import {Nodemailer} from "../../../kit/nodemailer";
 
 export class EmailFeedback implements INotifyEmail{
-    static config: Configuration
+    static config: MConfiguration
 
-    constructor(config: Configuration) {
+    constructor(config: MConfiguration) {
         EmailFeedback.config = config;
     }
 
