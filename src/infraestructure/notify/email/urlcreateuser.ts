@@ -24,15 +24,9 @@ export class EmailURLCreateUser implements INotifyEmailURLCreateUser{
 
         item.typeUser = this.getTypeUserTokenObject(tokenObject)
 
-        const filename = item.typeUser === 'Admin' ? 'Manual Administrador - HoloResults.pdf' : 'Manual Medico - HoloResults.pdf'
-
-        const path = item.typeUser === 'Admin'
-            ? './assets/MANUAL DE HOLORESULTS - ADMINISTRADOR.pdf'
-            : './assets/MANUAL DE HOLORESULTS - MEDICO.pdf'
-
-        const existFile = File.exist(path)
-        if (!existFile) {
-            return ['', new Error(404, 'file not found', path + ' file not found', 'EmailURLCreateUser.sendNotify()')]
+        const [filename, path, err] = this.getFilenameAndPath(item.typeUser)
+        if (!Error.isVoidError(err)) {
+            return ['', error]
         }
 
         const mailConfig = EmailURLCreateUser.config.mail
@@ -50,6 +44,28 @@ export class EmailURLCreateUser implements INotifyEmailURLCreateUser{
         }
 
         return [await Nodemailer.transporter(EmailURLCreateUser.config).sendMail(mailOptions), Error.voidError()]
+    }
+
+    getFilenameAndPath(typeUser: string): [string, string, MError] {
+        const filename = typeUser === 'Admin' ? 'Manual Administrador - HoloResults.pdf' : 'Manual Medico - HoloResults.pdf'
+
+        const path = typeUser === 'Admin'
+            ? './assets/MANUAL DE HOLORESULTS - ADMINISTRADOR.pdf'
+            : './assets/MANUAL DE HOLORESULTS - MEDICO.pdf'
+
+        const existFile = File.exist(path)
+        if (!existFile) {
+            const error: MError = {
+                code: 404,
+                error: path + ': file not found',
+                message: 'file not found',
+                where: 'EmailURLCreateUser.sendNotify()'
+            }
+
+            return ['', '', error]
+        }
+
+        return [filename, path, Error.voidError()]
     }
 
     getTypeUserTokenObject(token: MTokenObject): 'Admin' | 'Medic' {
