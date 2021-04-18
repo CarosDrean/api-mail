@@ -43,7 +43,7 @@ export class HandlerFeedback {
         try {
             return [new Feedback(item.email, item.type, item.message, item.user), Error.voidError()]
         } catch (e) {
-            return [item, new Error(400, e)]
+            return [item, new Error(400, e, '', 'HandlerFeedback.getDataBody()')]
         }
     }
 }

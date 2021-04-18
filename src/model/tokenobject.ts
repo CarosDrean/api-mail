@@ -15,6 +15,10 @@ export class TokenObject implements MTokenObject {
         return this.result.isValidExternal()
     }
 
+    static tokenObjectVoid(): MTokenObject {
+        return new TokenObject(new External('Medic'))
+    }
+
 }
 
 export interface MExternal {

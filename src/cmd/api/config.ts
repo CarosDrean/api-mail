@@ -35,17 +35,17 @@ export class Config {
     private static assemblyConfiguration(mConfig: MConfiguration): [MConfiguration, MError] {
         const [mail, error] = Config.assemblyMail(mConfig.mail)
         if (!Error.isVoidError(error)) {
-            return [mConfig, new Error(500, error.error, 'config is invalid')]
+            return [mConfig, new Error(500, error.error, 'config is invalid', 'assemblyConfiguration')]
         }
 
         const [nodemailer, err] = Config.assemblyNodemailer(mConfig.nodemailer)
         if (!Error.isVoidError(err)) {
-            return [mConfig, new Error(500, err.error, 'config is invalid')]
+            return [mConfig, new Error(500, err.error, 'config is invalid', 'assemblyConfiguration')]
         }
 
         const config = new Configuration(mail, nodemailer, mConfig.port)
         if (!config.isValidConfiguration()) {
-            return [config, new Error(500, 'invalid config', 'config is invalid')]
+            return [config, new Error(500, 'invalid config', 'config is invalid', 'assemblyConfiguration')]
         }
 
         return [config, Error.voidError()]
@@ -54,12 +54,12 @@ export class Config {
     private static assemblyNodemailer(mNodemailer: MNodemailer): [MNodemailer, MError] {
         const [auth, error] = Config.assemblyAuth(mNodemailer.auth)
         if (!Error.isVoidError(error)) {
-            return [mNodemailer, new Error(500, error.error, 'field nodemailer is invalid')]
+            return [mNodemailer, new Error(500, error.error, 'field nodemailer is invalid', 'assemblyNodemailer')]
         }
 
         const nodemailer = new Nodemailer(auth, mNodemailer.service)
         if (!nodemailer.isValidNodemailer()) {
-            return [mNodemailer, new Error(500, 'invalid nodemailer', 'field nodemailer is invalid')]
+            return [mNodemailer, new Error(500, 'invalid nodemailer', 'field nodemailer is invalid', 'assemblyNodemailer')]
         }
 
         return [nodemailer, Error.voidError()]
@@ -68,7 +68,7 @@ export class Config {
     private static assemblyAuth(mAuth: MAuth): [MAuth, MError] {
        const auth = new Auth(mAuth.accessToken, mAuth.clientId, mAuth.clientSecret, mAuth.refreshToken, mAuth.type, mAuth.user)
        if (!auth.isValidAuth()) {
-           return [mAuth, new Error(500, 'invalid auth', 'field auth is invalid')]
+           return [mAuth, new Error(500, 'invalid auth', 'field auth is invalid', 'assemblyAuth')]
        }
 
        return [auth, Error.voidError()]
@@ -77,7 +77,7 @@ export class Config {
     private static assemblyMail(mMail: MMail): [MMail, MError] {
         const mail = new Mail(mMail.email, mMail.name)
         if (!mail.isValidMail()) {
-            return [mMail, new Error(500, 'invalid mail', 'field mail is invalid')]
+            return [mMail, new Error(500, 'invalid mail', 'field mail is invalid', 'assemblyMail')]
         }
 
         return [mail, Error.voidError()]

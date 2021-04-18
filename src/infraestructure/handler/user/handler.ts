@@ -69,7 +69,7 @@ export class HandlerUser {
         try {
             return [new User(item.email, item.password, item.user), Error.voidError()]
         } catch (e) {
-            return [item, new Error(400, e)]
+            return [item, new Error(400, e, '', 'HandlerUser.getDataBody()')]
         }
     }
 }

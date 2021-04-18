@@ -27,6 +27,7 @@ export class HandlerURLCreateUser {
 
         const [info, err] = await HandlerURLCreateUser.useCase.sendNotify(item)
         if (!Error.isVoidError(err)) {
+            err.error = err.error.toString()
             res.status(err.code).json(err)
             return
         }
@@ -43,7 +44,7 @@ export class HandlerURLCreateUser {
         try {
             return [new URLCreateUser(item.business, item.url, item.email), Error.voidError()]
         } catch (e) {
-            return [item, new Error(400, e)]
+            return [item, new Error(400, e, '', 'HandlerURLCreateUser.getDataBody()')]
         }
     }
 }

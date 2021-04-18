@@ -18,7 +18,8 @@ export class UseCaseMailWeb implements IUseCaseMailWeb {
             const error: MError = {
                 code: 500,
                 message: 'sending email',
-                error: e
+                error: e,
+                where: 'UseCaseMailWeb.sendNotify()'
             }
 
             return ['', error]

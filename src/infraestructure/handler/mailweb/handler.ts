@@ -43,7 +43,7 @@ export class HandlerMailWeb {
         try {
             return [new MailWeb(item.business, item.consult, item.email, item.phone, item.ruc), Error.voidError()]
         } catch (e) {
-            return [item, new Error(400, e)]
+            return [item, new Error(400, e, '', 'HandlerMailWeb.getDataBody()')]
         }
     }
 }

@@ -1,12 +1,13 @@
 import {INotifyEmailURLCreateUser} from "../../../domain/urlcreateuser/urlcreateuser";
 
-import {MConfiguration} from "../../../model/configuration";
 import {Nodemailer} from "../../../kit/nodemailer";
-import {MURLCreateUser} from "../../../model/urlcreateuser";
-import {URLUserTemplate} from "./templates/urlcreateuser";
 import {Token} from "../../../kit/token";
+import {MConfiguration} from "../../../model/configuration";
+import {MURLCreateUser} from "../../../model/urlcreateuser";
 import {MTokenObject} from "../../../model/tokenobject";
 import {Error, MError} from "../../../model/error";
+import {URLUserTemplate} from "./templates/urlcreateuser";
+import {File} from "../../../kit/file";
 
 export class EmailURLCreateUser implements INotifyEmailURLCreateUser{
     static config: MConfiguration
@@ -25,10 +26,14 @@ export class EmailURLCreateUser implements INotifyEmailURLCreateUser{
 
         const filename = item.typeUser === 'Admin' ? 'Manual Administrador - HoloResults.pdf' : 'Manual Medico - HoloResults.pdf'
 
-        // TODO: verificar si existe el archivo, podria ponerse el nombre y el path en el configuration.json
         const path = item.typeUser === 'Admin'
             ? './assets/MANUAL DE HOLORESULTS - ADMINISTRADOR.pdf'
             : './assets/MANUAL DE HOLORESULTS - MEDICO.pdf'
+
+        const existFile = File.exist(path)
+        if (!existFile) {
+            return ['', new Error(404, 'file not found', path + ' file not found', 'EmailURLCreateUser.sendNotify()')]
+        }
 
         const mailConfig = EmailURLCreateUser.config.mail
 

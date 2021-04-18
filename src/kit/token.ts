@@ -1,3 +1,5 @@
+import atob from "atob"
+
 import {External, MTokenObject, TokenObject} from "../model/tokenobject";
 import {Error, MError} from "../model/error";
 
@@ -14,13 +16,24 @@ export class Token {
     }
 
     static decodeToken(token: string): [MTokenObject, MError] {
-        const [tokenObject, error] = this.assemblyTokenObject(JSON.parse(atob(token.split('.')[1])))
+        const tokenBody = token.split('.')[1]
+        if (tokenBody == null) {
+            const error: MError = {
+                code: 400,
+                error: 'invalid token',
+                message: 'token is invalid',
+                where: 'Token.decodeToken()'
+            }
+            return [TokenObject.tokenObjectVoid(), error]
+        }
+
+        const [tokenObject, error] = this.assemblyTokenObject(JSON.parse(atob(tokenBody)))
         if (!Error.isVoidError(error)) {
             return [tokenObject, error]
         }
 
         if (!tokenObject.isValidTokenObject()) {
-            const err = new Error(400, 'invalid token object', 'the object token is invalid')
+            const err = new Error(400, 'invalid token object', 'the object token is invalid', 'Token.decodeToken()')
             return [tokenObject, err]
         }
 
@@ -32,7 +45,7 @@ export class Token {
             const result = new External(item.result.data)
             return [new TokenObject(result), Error.voidError()]
         } catch (e) {
-            return [item, new Error(400, e)]
+            return [item, new Error(400, e, '', 'Token.assemblyTokenObject()')]
         }
     }
 }

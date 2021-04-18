@@ -21,14 +21,14 @@ export class URLCreateUser implements MURLCreateUser{
     }
 
     isValidURLCreateUser(): boolean {
-        return this.isValidBusiness() && this.isValidData() && this.isValidEmail()
+        return this.isValidBusiness() && this.isValidURL() && this.isValidEmail()
     }
 
     isValidBusiness(): boolean {
         return this.business != "" && this.business != null
     }
 
-    isValidData(): boolean {
+    isValidURL(): boolean {
         return this.url != "" && this.url != null
     }
 

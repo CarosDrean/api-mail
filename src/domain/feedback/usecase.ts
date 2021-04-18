@@ -18,7 +18,8 @@ export class UseCaseFeedback implements IUseCaseFeedback{
             const error: MError = {
                 code: 500,
                 message: 'sending email',
-                error: e
+                error: e,
+                where: 'UseCaseFeedback.sendNotify()'
             }
 
             return ['', error]

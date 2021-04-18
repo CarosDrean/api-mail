@@ -18,10 +18,12 @@ export class UseCaseURLCreateUser implements IUseCaseURLCreateUser {
 
             return [info, Error.voidError()]
         } catch (e) {
+            console.log(e)
             const error: MError = {
                 code: 500,
                 message: 'sending email',
-                error: e
+                error: e,
+                where: 'UseCaseURLCreateUser.sendNotify()'
             }
 
             return ['', error]

@@ -18,7 +18,8 @@ export class UseCaseUser implements IUseCaseUser {
             const error: MError = {
                 code: 500,
                 message: 'sending email new user',
-                error: e
+                error: e,
+                where: 'UseCaseUser.sendNotifyNewUser()'
             }
 
             return ['', error]
@@ -34,7 +35,8 @@ export class UseCaseUser implements IUseCaseUser {
             const error: MError = {
                 code: 500,
                 message: 'sending email reset password',
-                error: e
+                error: e,
+                where: 'UseCaseUser.sendNotifyResetPassword()'
             }
 
             return ['', error]
