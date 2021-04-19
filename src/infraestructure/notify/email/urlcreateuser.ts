@@ -7,7 +7,7 @@ import {MURLCreateUser} from "../../../model/urlcreateuser";
 import {MTokenObject} from "../../../model/tokenobject";
 import {Error, MError} from "../../../model/error";
 import {URLUserTemplate} from "./templates/urlcreateuser";
-import {File} from "../../../kit/file";
+import {FileSystem} from "../../../kit/filesystem";
 
 export class EmailURLCreateUser implements INotifyEmailURLCreateUser{
     static config: MConfiguration
@@ -53,7 +53,7 @@ export class EmailURLCreateUser implements INotifyEmailURLCreateUser{
             ? './assets/MANUAL DE HOLORESULTS - ADMINISTRADOR.pdf'
             : './assets/MANUAL DE HOLORESULTS - MEDICO.pdf'
 
-        const existFile = File.exist(path)
+        const existFile = FileSystem.exist(path)
         if (!existFile) {
             const error: MError = {
                 code: 404,
