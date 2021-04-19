@@ -20,11 +20,6 @@ export class HandlerUser {
             return
         }
 
-        if (!item.isValidUser()) {
-            res.status(400).json('data is not complete')
-            return
-        }
-
         const [info, err] = await HandlerUser.useCase.sendNotifyNewUser(item)
         if (!Error.isVoidError(err)) {
             res.status(err.code).json(err)
@@ -46,11 +41,6 @@ export class HandlerUser {
             return
         }
 
-        if (!item.isValidUser()) {
-            res.status(400).json('data is not complete')
-            return
-        }
-
         const [info, err] = await HandlerUser.useCase.sendNotifyResetPassword(item)
         if (!Error.isVoidError(err)) {
             res.status(err.code).json(err)
@@ -69,7 +59,7 @@ export class HandlerUser {
         try {
             return [new User(item.email, item.password, item.user), Error.voidError()]
         } catch (e) {
-            return [item, new Error(400, e)]
+            return [item, new Error(400, e, '', 'HandlerUser.getDataBody()')]
         }
     }
 }

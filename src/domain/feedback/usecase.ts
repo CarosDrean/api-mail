@@ -10,6 +10,11 @@ export class UseCaseFeedback implements IUseCaseFeedback{
     }
 
     async sendNotify(feedback: MFeedback): Promise<[any, MError]> {
+        const error = UseCaseFeedback.validateFields(feedback)
+        if (!Error.isVoidError(error)) {
+            return ['', error]
+        }
+
         try {
             const info = await UseCaseFeedback.emailNotifier.sendNotify(feedback)
 
@@ -18,11 +23,25 @@ export class UseCaseFeedback implements IUseCaseFeedback{
             const error: MError = {
                 code: 500,
                 message: 'sending email',
-                error: e
+                error: e,
+                where: 'UseCaseFeedback.sendNotify()'
             }
 
             return ['', error]
         }
+    }
+
+    private static validateFields(feedback: MFeedback): MError {
+        if (!feedback.isValidFeedback()) {
+            return {
+                code: 400,
+                message: 'validate fields',
+                error: 'data is not complete',
+                where: 'UseCaseFeedback.validateFields()'
+            }
+        }
+
+        return Error.voidError()
     }
 
 }

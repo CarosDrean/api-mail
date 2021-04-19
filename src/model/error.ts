@@ -1,22 +1,25 @@
 export interface MError {
     code: number
-    error: string
+    error: any
     message: string
+    where: string
 }
 
 export class Error implements MError {
     code: number;
-    error: string;
+    error: any;
     message: string
+    where: string
 
-    constructor(code: number, error: string, message: string = '') {
+    constructor(code: number, error: any, message: string = '', where: string) {
         this.code = code;
         this.error = error;
         this.message = message
+        this.where = where
     }
 
     static voidError(): MError {
-        return {code: 0, error: '', message: ''}
+        return {code: 0, error: '', message: '', where: ''}
     }
 
     static isVoidError(error: MError): boolean {

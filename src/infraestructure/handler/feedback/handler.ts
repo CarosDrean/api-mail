@@ -20,11 +20,6 @@ export class HandlerFeedback {
             return
         }
 
-        if (!item.isValidFeedback()) {
-            res.status(400).json('data is not complete')
-            return
-        }
-
         const [info, err] = await HandlerFeedback.useCase.sendNotify(item)
         if (!Error.isVoidError(err)) {
             res.status(err.code).json(err)
@@ -43,7 +38,7 @@ export class HandlerFeedback {
         try {
             return [new Feedback(item.email, item.type, item.message, item.user), Error.voidError()]
         } catch (e) {
-            return [item, new Error(400, e)]
+            return [item, new Error(400, e, '', 'HandlerFeedback.getDataBody()')]
         }
     }
 }
