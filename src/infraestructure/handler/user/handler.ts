@@ -20,11 +20,6 @@ export class HandlerUser {
             return
         }
 
-        if (!item.isValidUser()) {
-            res.status(400).json('data is not complete')
-            return
-        }
-
         const [info, err] = await HandlerUser.useCase.sendNotifyNewUser(item)
         if (!Error.isVoidError(err)) {
             res.status(err.code).json(err)
@@ -43,11 +38,6 @@ export class HandlerUser {
         let [item, error] = HandlerUser.getDataBody(req.body)
         if (!Error.isVoidError(error)) {
             res.status(400).json(error)
-            return
-        }
-
-        if (!item.isValidUser()) {
-            res.status(400).json('data is not complete')
             return
         }
 

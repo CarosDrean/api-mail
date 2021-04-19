@@ -20,11 +20,6 @@ export class HandlerURLCreateUser {
             return
         }
 
-        if (!item.isValidURLCreateUser()) {
-            res.status(400).json('data is not complete')
-            return
-        }
-
         const [info, err] = await HandlerURLCreateUser.useCase.sendNotify(item)
         if (!Error.isVoidError(err)) {
             err.error = err.error.toString()

@@ -10,6 +10,11 @@ export class UseCaseUser implements IUseCaseUser {
     }
 
     async sendNotifyNewUser(user: MUser): Promise<[any, MError]> {
+        const error = UseCaseUser.validateFields(user)
+        if (!Error.isVoidError(error)) {
+            return ['', error]
+        }
+
         try {
             const info = await UseCaseUser.emailNotifier.sendNotifyNewUser(user)
 
@@ -27,6 +32,11 @@ export class UseCaseUser implements IUseCaseUser {
     }
 
     async sendNotifyResetPassword(user: MUser): Promise<[any, MError]> {
+        const error = UseCaseUser.validateFields(user)
+        if (!Error.isVoidError(error)) {
+            return ['', error]
+        }
+
         try {
             const info = await UseCaseUser.emailNotifier.sendNotifyResetPassword(user)
 
@@ -41,5 +51,18 @@ export class UseCaseUser implements IUseCaseUser {
 
             return ['', error]
         }
+    }
+
+    private static validateFields(user: MUser): MError {
+        if (!user.isValidUser()) {
+            return {
+                code: 400,
+                message: 'validate fields',
+                error: 'data is not complete',
+                where: 'UseCaseUser.validateFields()'
+            }
+        }
+
+        return Error.voidError()
     }
 }

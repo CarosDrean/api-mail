@@ -20,11 +20,6 @@ export class HandlerMailWeb {
             return
         }
 
-        if (!item.isValidMailWeb()) {
-            res.status(400).json('data is not complete')
-            return
-        }
-
         const [info, err] = await HandlerMailWeb.useCase.sendNotify(item)
         if (!Error.isVoidError(err)) {
             res.status(err.code).json(err)

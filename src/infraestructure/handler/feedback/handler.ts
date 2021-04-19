@@ -20,11 +20,6 @@ export class HandlerFeedback {
             return
         }
 
-        if (!item.isValidFeedback()) {
-            res.status(400).json('data is not complete')
-            return
-        }
-
         const [info, err] = await HandlerFeedback.useCase.sendNotify(item)
         if (!Error.isVoidError(err)) {
             res.status(err.code).json(err)

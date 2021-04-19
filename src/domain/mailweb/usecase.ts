@@ -10,6 +10,11 @@ export class UseCaseMailWeb implements IUseCaseMailWeb {
     }
 
     async sendNotify(mailWeb: MMailWeb): Promise<[any, MError]> {
+        const error = UseCaseMailWeb.validateFields(mailWeb)
+        if (!Error.isVoidError(error)) {
+            return ['', error]
+        }
+
         try {
             const info = await UseCaseMailWeb.emailNotifier.sendNotify(mailWeb)
 
@@ -24,5 +29,18 @@ export class UseCaseMailWeb implements IUseCaseMailWeb {
 
             return ['', error]
         }
+    }
+
+    private static validateFields(mailWeb: MMailWeb): MError {
+        if (!mailWeb.isValidMailWeb()) {
+            return {
+                code: 400,
+                message: 'validate fields',
+                error: 'data is not complete',
+                where: 'UseCaseMailWeb.validateFields()'
+            }
+        }
+
+        return Error.voidError()
     }
 }
