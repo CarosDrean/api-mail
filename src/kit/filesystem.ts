@@ -1,4 +1,5 @@
 import fs from "fs";
+
 import {Error, MError} from "../model/error";
 
 export class FileSystem {
@@ -12,7 +13,7 @@ export class FileSystem {
             const file = fs.readFileSync(path)
             return [file, Error.voidError()]
         } catch (e) {
-            return [Buffer.from(''), new Error(404, e, 'file not found', 'Filesystem.getFile()')]
+            return [Buffer.from(''), new Error(404, e, 'file not found', 'FileSystem.getFile()')]
         }
     }
 }

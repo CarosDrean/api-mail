@@ -6,6 +6,7 @@ import {Multer} from "../../middleware/multer";
 
 export class RouterFile {
     PRIVATE_ROUTE_PREFIX = '/api/v1/file'
+    FIELD_NAME_FILE = 'file'
 
     constructor(app: Router, config: MConfiguration) {
         const handler = new HandlerFile()
@@ -15,6 +16,6 @@ export class RouterFile {
     }
 
     privateRoutes(app: Router, handler: HandlerFile, multer: Multer): void {
-        app.post(this.PRIVATE_ROUTE_PREFIX + '/upload', multer.midUploadFile, handler.uploadFile)
+        app.post(this.PRIVATE_ROUTE_PREFIX + '/upload', multer.midUploadFile(this.FIELD_NAME_FILE), handler.uploadFile)
     }
 }

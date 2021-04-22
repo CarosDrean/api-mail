@@ -1,7 +1,8 @@
 import multer from 'multer'
-import express from "express";
-import {v4 as uuidV4} from 'uuid'
 import path from 'path'
+import {v4 as uuidV4} from 'uuid'
+
+import express from "express";
 
 import {MConfiguration} from "../../model/configuration";
 
@@ -12,7 +13,7 @@ export class Multer {
         Multer.config = config;
     }
 
-    midUploadFile(): express.RequestHandler<any, any, any, any, Record<string, any>> {
+    midUploadFile(fieldName: string): express.RequestHandler<any, any, any, any, Record<string, any>> {
         const storage = multer.diskStorage({
             destination: Multer.config.uploads,
             filename: (req, file, cb) => {
@@ -20,9 +21,11 @@ export class Multer {
             }
         })
 
-        return multer({
+        const cMulter = multer({
             storage: storage,
             dest: Multer.config.uploads
-        }).single('file')
+        })
+
+        return cMulter.single(fieldName)
     }
 }

@@ -5,8 +5,8 @@ import {MError} from "../../../model/error";
 
 export class HandlerFile {
     uploadFile(req: Request, res: Response) {
-        const filename = req.file.filename
-        if (filename == '' || filename == null) {
+        const file = req.file
+        if (file == undefined) {
             const error: MError = {
                 code: 400,
                 error: 'file not found',
