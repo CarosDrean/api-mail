@@ -5,6 +5,8 @@ import {MMailWeb} from "../../../model/mailweb";
 import {MailWebTemplate} from "./templates/mailweb";
 
 export class EmailMailWeb implements INotifyEmailMailWeb {
+    static TITLE_MAIL = 'Cotizacion'
+
     static config: MConfiguration
 
     constructor(config: MConfiguration) {
@@ -12,12 +14,14 @@ export class EmailMailWeb implements INotifyEmailMailWeb {
     }
 
     async sendNotify(item: MMailWeb): Promise<any> {
+        const auxMail = 'saludocupacional@holosalud.pe'
+
         const mailConfig = EmailMailWeb.config.mail
 
         const mailOptions = {
-            from: `${mailConfig.name} | Resultados <${mailConfig.email}>`,
-            to: `${item.email}, saludocupacional@holosalud.pe`,
-            subject: `Cotizacion | ${item.email}`,
+            from: `${mailConfig.name} | ${EmailMailWeb.TITLE_MAIL} <${mailConfig.email}>`,
+            to: `${item.email}, ${auxMail}`,
+            subject: `${EmailMailWeb.TITLE_MAIL} | ${item.email}`,
             html: MailWebTemplate.template(item)
         }
 

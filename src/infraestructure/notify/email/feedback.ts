@@ -1,10 +1,12 @@
 import {INotifyEmailFeedback} from "../../../domain/feedback/feedback";
-import {MFeedback} from "../../../model/feedback";
+import {Feedback, MFeedback} from "../../../model/feedback";
 import {MConfiguration} from "../../../model/configuration";
 import {FeedbackTemplate} from "./templates/feedback";
 import {Nodemailer} from "../../../kit/nodemailer";
 
 export class EmailFeedback implements INotifyEmailFeedback{
+    static TITLE_MAIL = 'Feedback'
+
     static config: MConfiguration
 
     constructor(config: MConfiguration) {
@@ -12,12 +14,14 @@ export class EmailFeedback implements INotifyEmailFeedback{
     }
 
     async sendNotify(item: MFeedback): Promise<any> {
+        const auxMail = 'holosaludti@gmail.com'
+
         const mailConfig = EmailFeedback.config.mail
 
         const mailOptions = {
-            from: `${mailConfig.name} | Feedback <${mailConfig.email}>`,
-            to: `${item.email}, holosaludti@gmail.com`,
-            subject: `Feedback | ${item.type}`,
+            from: `${mailConfig.name} | ${EmailFeedback.TITLE_MAIL} <${mailConfig.email}>`,
+            to: `${item.email}, ${auxMail}`,
+            subject: `${EmailFeedback.TITLE_MAIL} | ${item.type}`,
             html: FeedbackTemplate.template(item)
         }
 
