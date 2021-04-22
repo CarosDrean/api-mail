@@ -43,7 +43,7 @@ export class Config {
             return [mConfig, new Error(500, err.error, 'config is invalid', 'assemblyConfiguration')]
         }
 
-        const config = new Configuration(mail, nodemailer, mConfig.port)
+        const config = new Configuration(mail, nodemailer, mConfig.port, mConfig.uploads)
         if (!config.isValidConfiguration()) {
             return [config, new Error(500, 'invalid config', 'config is invalid', 'assemblyConfiguration')]
         }

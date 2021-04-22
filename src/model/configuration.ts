@@ -1,5 +1,6 @@
 export interface MConfiguration {
     port: number
+    uploads: string
     mail: MMail
     nodemailer: MNodemailer
 
@@ -10,19 +11,25 @@ export class Configuration implements MConfiguration {
     mail: MMail;
     nodemailer: MNodemailer;
     port: number;
+    uploads: string
 
-    constructor(mail: MMail, nodemailer: MNodemailer, port: number) {
+    constructor(mail: MMail, nodemailer: MNodemailer, port: number, uploads: string) {
         this.mail = mail;
         this.nodemailer = nodemailer;
         this.port = port;
+        this.uploads = uploads
     }
 
     isValidConfiguration(): boolean {
-        return this.isPortValid() && this.isValidMail() && this.isValidNodemailer()
+        return this.isPortValid() && this.isValidUploads() && this.isValidMail() && this.isValidNodemailer()
     }
 
     isPortValid(): boolean {
         return this.port != 0 && this.port != null
+    }
+
+    isValidUploads(): boolean {
+        return this.uploads != '' && this.uploads != null
     }
 
     isValidMail(): boolean {

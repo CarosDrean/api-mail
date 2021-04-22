@@ -7,9 +7,11 @@ import {MURLCreateUser} from "../../../model/urlcreateuser";
 import {MTokenObject} from "../../../model/tokenobject";
 import {Error, MError} from "../../../model/error";
 import {URLUserTemplate} from "./templates/urlcreateuser";
-import {File} from "../../../kit/file";
+import {FileSystem} from "../../../kit/filesystem";
 
 export class EmailURLCreateUser implements INotifyEmailURLCreateUser{
+    static TITLE_MAIL = 'HoloSalud'
+
     static config: MConfiguration
 
     constructor(config: MConfiguration) {
@@ -32,9 +34,9 @@ export class EmailURLCreateUser implements INotifyEmailURLCreateUser{
         const mailConfig = EmailURLCreateUser.config.mail
 
         const mailOptions = {
-            from: `${mailConfig.name} | Usuario Externo <${mailConfig.email}>`,
+            from: `${mailConfig.name} | ${EmailURLCreateUser.TITLE_MAIL} <${mailConfig.email}>`,
             to: `${item.email}`,
-            subject: `HoloSalud | Usuario Externo`,
+            subject: `${EmailURLCreateUser.TITLE_MAIL} | Usuario Externo`,
             html: URLUserTemplate.template(item),
             attachments: [{
                 filename: filename,
@@ -47,13 +49,21 @@ export class EmailURLCreateUser implements INotifyEmailURLCreateUser{
     }
 
     getFilenameAndPath(typeUser: string): [string, string, MError] {
-        const filename = typeUser === 'Admin' ? 'Manual Administrador - HoloResults.pdf' : 'Manual Medico - HoloResults.pdf'
+        const nameHandbookAdmin = 'Manual Administrador - HoloResults.pdf'
+        const nameHandbookMedic = 'Manual Medico - HoloResults.pdf'
+
+        const pathHandbookAdmin = './assets/MANUAL DE HOLORESULTS - ADMINISTRADOR.pdf'
+        const pathHandbookMedic = './assets/MANUAL DE HOLORESULTS - MEDICO.pdf'
+
+        const filename = typeUser === 'Admin'
+            ? nameHandbookAdmin
+            : nameHandbookMedic
 
         const path = typeUser === 'Admin'
-            ? './assets/MANUAL DE HOLORESULTS - ADMINISTRADOR.pdf'
-            : './assets/MANUAL DE HOLORESULTS - MEDICO.pdf'
+            ? pathHandbookAdmin
+            : pathHandbookMedic
 
-        const existFile = File.exist(path)
+        const existFile = FileSystem.exist(path)
         if (!existFile) {
             const error: MError = {
                 code: 404,

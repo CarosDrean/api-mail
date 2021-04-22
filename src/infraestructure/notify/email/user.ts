@@ -6,6 +6,8 @@ import {Nodemailer} from "../../../kit/nodemailer";
 import {NewUserTemplate} from "./templates/newuser";
 
 export class EmailUser implements INotifyEmailUser {
+    static TITLE_MAIL = 'HoloSalud'
+
     static config: MConfiguration
 
     constructor(config: MConfiguration) {
@@ -13,12 +15,14 @@ export class EmailUser implements INotifyEmailUser {
     }
 
     async sendNotifyNewUser(item: MUser): Promise<any> {
+        const subject = 'Nuevo Usuario'
+
         const mailConfig = EmailUser.config.mail
 
         const mailOptions = {
-            from: `${mailConfig.name} | Resultados <${mailConfig.email}>`,
+            from: `${mailConfig.name} | ${EmailUser.TITLE_MAIL} <${mailConfig.email}>`,
             to: `${item.email}`,
-            subject: `HoloSalud | Nuevo Usuario`,
+            subject: `${EmailUser.TITLE_MAIL} | ${subject}`,
             html: NewUserTemplate.template(item)
         }
 
@@ -26,12 +30,14 @@ export class EmailUser implements INotifyEmailUser {
     }
 
     async sendNotifyResetPassword(item: MUser): Promise<any> {
+        const subject = 'Nueva Contraseña'
+
         const mailConfig = EmailUser.config.mail
 
         const mailOptions = {
-            from: `${mailConfig.name} | Resultados <${mailConfig.email}>`,
+            from: `${mailConfig.name} | ${EmailUser.TITLE_MAIL} <${mailConfig.email}>`,
             to: `${item.email}`,
-            subject: `HoloSalud | Nueva Contraseña`,
+            subject: `${EmailUser.TITLE_MAIL} | ${subject}`,
             html: ResetPasswordTemplate.template(item)
         }
 
