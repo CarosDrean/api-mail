@@ -16,4 +16,8 @@ export class FileSystem {
             return [Buffer.from(''), new Error(404, e, 'file not found', 'FileSystem.getFile()')]
         }
     }
+
+    static deleteFile(path: string) {
+        fs.unlinkSync(path)
+    }
 }

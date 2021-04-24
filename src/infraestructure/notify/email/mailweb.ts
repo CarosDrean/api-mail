@@ -1,10 +1,10 @@
-import {INotifyEmailMailWeb} from "../../../domain/mailweb/mailweb";
+import {INotifyMailWeb} from "../../../domain/mailweb/mailweb";
 import {MConfiguration} from "../../../model/configuration";
 import {Nodemailer} from "../../../kit/nodemailer";
 import {MMailWeb} from "../../../model/mailweb";
 import {MailWebTemplate} from "./templates/mailweb";
 
-export class EmailMailWeb implements INotifyEmailMailWeb {
+export class EmailMailWeb implements INotifyMailWeb {
     static TITLE_MAIL = 'Cotizacion'
 
     static config: MConfiguration

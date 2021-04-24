@@ -1,4 +1,4 @@
-import {INotifyEmailURLCreateUser} from "../../../domain/urlcreateuser/urlcreateuser";
+import {INotifyURLCreateUser} from "../../../domain/urlcreateuser/urlcreateuser";
 
 import {Nodemailer} from "../../../kit/nodemailer";
 import {Token} from "../../../kit/token";
@@ -9,7 +9,7 @@ import {Error, MError} from "../../../model/error";
 import {URLUserTemplate} from "./templates/urlcreateuser";
 import {FileSystem} from "../../../kit/filesystem";
 
-export class EmailURLCreateUser implements INotifyEmailURLCreateUser{
+export class EmailURLCreateUser implements INotifyURLCreateUser{
     static TITLE_MAIL = 'HoloSalud'
 
     static config: MConfiguration
@@ -28,7 +28,7 @@ export class EmailURLCreateUser implements INotifyEmailURLCreateUser{
 
         const [filename, path, err] = this.getFilenameAndPath(item.typeUser)
         if (!Error.isVoidError(err)) {
-            return ['', error]
+            return ['', err]
         }
 
         const mailConfig = EmailURLCreateUser.config.mail

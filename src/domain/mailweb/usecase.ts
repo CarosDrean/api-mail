@@ -1,11 +1,11 @@
-import {INotifyEmailMailWeb, IUseCaseMailWeb} from "./mailweb";
+import {INotifyMailWeb, IUseCaseMailWeb} from "./mailweb";
 import {Error, MError} from "../../model/error";
 import {MMailWeb} from "../../model/mailweb";
 
 export class UseCaseMailWeb implements IUseCaseMailWeb {
-    static emailNotifier: INotifyEmailMailWeb
+    static emailNotifier: INotifyMailWeb
 
-    constructor(emailNotifier: INotifyEmailMailWeb) {
+    constructor(emailNotifier: INotifyMailWeb) {
         UseCaseMailWeb.emailNotifier = emailNotifier
     }
 

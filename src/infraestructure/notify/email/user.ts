@@ -1,11 +1,11 @@
-import {INotifyEmailUser} from "../../../domain/user/user";
+import {INotifyUser} from "../../../domain/user/user";
 import {MConfiguration} from "../../../model/configuration";
 import {MUser} from "../../../model/user";
 import {ResetPasswordTemplate} from "./templates/resetpassword";
 import {Nodemailer} from "../../../kit/nodemailer";
 import {NewUserTemplate} from "./templates/newuser";
 
-export class EmailUser implements INotifyEmailUser {
+export class EmailUser implements INotifyUser {
     static TITLE_MAIL = 'HoloSalud'
 
     static config: MConfiguration

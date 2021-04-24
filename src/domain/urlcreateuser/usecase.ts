@@ -1,11 +1,11 @@
-import {INotifyEmailURLCreateUser, IUseCaseURLCreateUser} from "./urlcreateuser";
+import {INotifyURLCreateUser, IUseCaseURLCreateUser} from "./urlcreateuser";
 import {Error, MError} from "../../model/error";
 import {MURLCreateUser} from "../../model/urlcreateuser";
 
 export class UseCaseURLCreateUser implements IUseCaseURLCreateUser {
-    static emailNotifier: INotifyEmailURLCreateUser
+    static emailNotifier: INotifyURLCreateUser
 
-    constructor(emailNotifier: INotifyEmailURLCreateUser) {
+    constructor(emailNotifier: INotifyURLCreateUser) {
         UseCaseURLCreateUser.emailNotifier = emailNotifier
     }
 
@@ -23,7 +23,6 @@ export class UseCaseURLCreateUser implements IUseCaseURLCreateUser {
 
             return [info, Error.voidError()]
         } catch (e) {
-            console.log(e)
             const error: MError = {
                 code: 500,
                 message: 'sending email',
