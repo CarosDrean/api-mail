@@ -3,10 +3,10 @@ import {MUser} from "../../model/user";
 import {Error, MError} from "../../model/error";
 
 export class UseCaseUser implements IUseCaseUser {
-    static emailNotifier: INotifyUser
+    emailNotifier: INotifyUser
 
     constructor(emailNotifier: INotifyUser) {
-        UseCaseUser.emailNotifier = emailNotifier
+        this.emailNotifier = emailNotifier
     }
 
     async sendNotifyNewUser(user: MUser): Promise<[any, MError]> {
@@ -16,7 +16,7 @@ export class UseCaseUser implements IUseCaseUser {
         }
 
         try {
-            const info = await UseCaseUser.emailNotifier.sendNotifyNewUser(user)
+            const info = await this.emailNotifier.sendNotifyNewUser(user)
 
             return [info, Error.voidError()]
         } catch (e) {
@@ -38,7 +38,7 @@ export class UseCaseUser implements IUseCaseUser {
         }
 
         try {
-            const info = await UseCaseUser.emailNotifier.sendNotifyResetPassword(user)
+            const info = await this.emailNotifier.sendNotifyResetPassword(user)
 
             return [info, Error.voidError()]
         } catch (e) {

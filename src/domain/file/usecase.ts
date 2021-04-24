@@ -3,10 +3,10 @@ import {Error, MError} from "../../model/error";
 import {MFile} from "../../model/file";
 
 export class UseCaseFile implements IUseCaseFile {
-    static notifier: INotifyFile
+    notifier: INotifyFile
 
     constructor(notifier: INotifyFile) {
-        UseCaseFile.notifier = notifier
+        this.notifier = notifier
     }
 
     async sendNotify(item: MFile): Promise<[any, MError]> {
@@ -16,7 +16,7 @@ export class UseCaseFile implements IUseCaseFile {
         }
 
         try {
-            const [info, err] = await UseCaseFile.notifier.sendNotify(item)
+            const [info, err] = await this.notifier.sendNotify(item)
             if (!Error.isVoidError(err)) {
                 return ['', err]
             }
