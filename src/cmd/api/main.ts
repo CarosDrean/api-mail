@@ -4,6 +4,7 @@ import express, {Request, Response, Router} from 'express';
 
 import {Config} from "./config";
 import {Routes} from "../../infraestructure/handler/router/init";
+import {Signature} from "./signature";
 
 function index(req: Request, res: Response) {
     res.json({
@@ -16,12 +17,13 @@ function main() {
     const server  = http.createServer(app)
 
     const config = Config.getConfiguration()
+    const signatures = new Signature().getCertificates()
     const router = Router()
 
     app.use(express.json())
     app.use(cors({origin: ['*']}))
 
-    new Routes(router, config)
+    new Routes(router, config, signatures)
     app.use(router)
 
     app.get('/', index)
