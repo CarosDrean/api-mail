@@ -6,14 +6,18 @@ import {RouterMailWeb} from "../mailweb/router";
 import {RouterUser} from "../user/router";
 import {RouterURLCreateUser} from "../urlcreateuser/router";
 import {RouterFile} from "../file/router";
+import {MSignatures} from "../../../model/signatures";
+import {Authentication} from "../../middleware/authentication";
 
 export class Routes {
 
-    constructor(router: Router, config: MConfiguration) {
+    constructor(router: Router, config: MConfiguration, signatures: MSignatures) {
+        const auth = new Authentication(signatures)
+
         new RouterFeedback(router, config)
         new RouterMailWeb(router, config)
         new RouterUser(router, config)
         new RouterURLCreateUser(router, config)
-        new RouterFile(router, config)
+        new RouterFile(router, config, auth)
     }
 }
