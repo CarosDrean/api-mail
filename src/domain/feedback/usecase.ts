@@ -1,11 +1,11 @@
-import {INotifyEmailFeedback, IUseCaseFeedback} from "./feedback";
+import {INotifyFeedback, IUseCaseFeedback} from "./feedback";
 import {Error, MError} from "../../model/error";
 import {MFeedback} from "../../model/feedback";
 
 export class UseCaseFeedback implements IUseCaseFeedback{
-    static emailNotifier: INotifyEmailFeedback
+    static emailNotifier: INotifyFeedback
 
-    constructor(emailNotifier: INotifyEmailFeedback) {
+    constructor(emailNotifier: INotifyFeedback) {
         UseCaseFeedback.emailNotifier = emailNotifier
     }
 

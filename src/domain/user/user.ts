@@ -6,7 +6,7 @@ export interface IUseCaseUser {
     sendNotifyResetPassword(user: MUser): Promise<[any, MError]>
 }
 
-export interface INotifyEmailUser {
+export interface INotifyUser {
     sendNotifyNewUser(item: MUser): Promise<any>
     sendNotifyResetPassword(item: MUser): Promise<any>
 }

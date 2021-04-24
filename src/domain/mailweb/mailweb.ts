@@ -5,6 +5,6 @@ export interface IUseCaseMailWeb {
     sendNotify(mailWeb: MMailWeb): Promise<[any, MError]>
 }
 
-export interface INotifyEmailMailWeb {
+export interface INotifyMailWeb {
     sendNotify(item: MMailWeb): Promise<any>
 }

@@ -1,10 +1,10 @@
-import {INotifyEmailFeedback} from "../../../domain/feedback/feedback";
+import {INotifyFeedback} from "../../../domain/feedback/feedback";
 import {Feedback, MFeedback} from "../../../model/feedback";
 import {MConfiguration} from "../../../model/configuration";
 import {FeedbackTemplate} from "./templates/feedback";
 import {Nodemailer} from "../../../kit/nodemailer";
 
-export class EmailFeedback implements INotifyEmailFeedback{
+export class EmailFeedback implements INotifyFeedback{
     static TITLE_MAIL = 'Feedback'
 
     static config: MConfiguration

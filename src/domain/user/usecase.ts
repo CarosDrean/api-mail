@@ -1,11 +1,11 @@
-import {INotifyEmailUser, IUseCaseUser} from "./user";
+import {INotifyUser, IUseCaseUser} from "./user";
 import {MUser} from "../../model/user";
 import {Error, MError} from "../../model/error";
 
 export class UseCaseUser implements IUseCaseUser {
-    static emailNotifier: INotifyEmailUser
+    static emailNotifier: INotifyUser
 
-    constructor(emailNotifier: INotifyEmailUser) {
+    constructor(emailNotifier: INotifyUser) {
         UseCaseUser.emailNotifier = emailNotifier
     }
 

@@ -5,6 +5,6 @@ export interface IUseCaseURLCreateUser {
     sendNotify(mailWeb: MURLCreateUser): Promise<[any, MError]>
 }
 
-export interface INotifyEmailURLCreateUser {
+export interface INotifyURLCreateUser {
     sendNotify(item: MURLCreateUser): Promise<[any, MError]>
 }
