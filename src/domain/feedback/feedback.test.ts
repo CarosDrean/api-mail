@@ -25,19 +25,19 @@ describe('useCase feedback', () => {
     const feedback = new Feedback('josueht15@gmail.com', 'Queja', 'hey', 'drean')
     const feedbackIncomplete = new Feedback('josueht15@gmail.com', '', 'hey', 'drean')
 
-    test('send notify successful', async () => {
+    test('send notify feedback successful', async () => {
         const [info, err] = await useCaseOk.sendNotify(feedback)
         expect(Error.isVoidError(err)).toBe(true)
         expect(info).toBe('Ok')
     })
 
-    test('send notify fail', async () => {
+    test('send notify feedback fail', async () => {
         const [info, error] = await useCaseError.sendNotify(feedback)
         expect(Error.isVoidError(error)).toBe(false)
         expect(info).toBe("")
     })
 
-    test('send notify incomplete model', async () => {
+    test('send notify feedback incomplete model', async () => {
         const [info, error] = await useCaseOk.sendNotify(feedbackIncomplete)
         expect(Error.isVoidError(error)).toBe(false)
         expect(info).toBe("")
