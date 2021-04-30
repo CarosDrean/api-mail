@@ -28,8 +28,10 @@ function main() {
 
     app.get('/', index)
 
-    server.listen(config.port, () => {
-        console.log(`server online in: localhost:${config.port}`)
+    const port = process.env.PORT_HTTP || config.port
+
+    server.listen(port, () => {
+        console.log(`server online in: localhost:${port}`)
     })
 }
 

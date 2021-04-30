@@ -6,3 +6,8 @@ Debe crear el archivo **configuration.json** basado en **configuration.example.j
 
 Debe agregar la carpeta **certificates** con un **private.rsa** y **public.rsa.pub**, estos archivos deben tener las mismas
 claves que del servicio que esta haciendo la peticion.
+
+## Docker
+
+Para trabajar con docker debera pasar los archivos mencionados en arriba
+en volumenes a la carpeta /app.
