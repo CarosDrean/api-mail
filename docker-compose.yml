@@ -1,0 +1,12 @@
+version: '3.7'
+
+services:
+  app:
+    image: drean779/api-mail:latest
+    volumes:
+      - ./configuration.json:/app/configuration.json
+      - ./certificates:/app/certificates
+    ports:
+      - 3000:3000
+    environment:
+      - PORT_HTTP=3000
