@@ -3,10 +3,10 @@ import {Error, MError} from "../../model/error";
 import {MFeedback} from "../../model/feedback";
 
 export class UseCaseFeedback implements IUseCaseFeedback{
-    static emailNotifier: INotifyFeedback
+    emailNotifier: INotifyFeedback
 
     constructor(emailNotifier: INotifyFeedback) {
-        UseCaseFeedback.emailNotifier = emailNotifier
+        this.emailNotifier = emailNotifier
     }
 
     async sendNotify(feedback: MFeedback): Promise<[any, MError]> {
@@ -16,7 +16,7 @@ export class UseCaseFeedback implements IUseCaseFeedback{
         }
 
         try {
-            const info = await UseCaseFeedback.emailNotifier.sendNotify(feedback)
+            const info = await this.emailNotifier.sendNotify(feedback)
 
             return [info, Error.voidError()]
         } catch (e) {

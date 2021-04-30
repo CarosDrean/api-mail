@@ -3,10 +3,10 @@ import {Error, MError} from "../../model/error";
 import {MMailWeb} from "../../model/mailweb";
 
 export class UseCaseMailWeb implements IUseCaseMailWeb {
-    static emailNotifier: INotifyMailWeb
+    emailNotifier: INotifyMailWeb
 
     constructor(emailNotifier: INotifyMailWeb) {
-        UseCaseMailWeb.emailNotifier = emailNotifier
+        this.emailNotifier = emailNotifier
     }
 
     async sendNotify(mailWeb: MMailWeb): Promise<[any, MError]> {
@@ -16,7 +16,7 @@ export class UseCaseMailWeb implements IUseCaseMailWeb {
         }
 
         try {
-            const info = await UseCaseMailWeb.emailNotifier.sendNotify(mailWeb)
+            const info = await this.emailNotifier.sendNotify(mailWeb)
 
             return [info, Error.voidError()]
         } catch (e) {

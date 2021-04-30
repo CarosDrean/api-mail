@@ -3,10 +3,10 @@ import {Error, MError} from "../../model/error";
 import {MURLCreateUser} from "../../model/urlcreateuser";
 
 export class UseCaseURLCreateUser implements IUseCaseURLCreateUser {
-    static emailNotifier: INotifyURLCreateUser
+    emailNotifier: INotifyURLCreateUser
 
     constructor(emailNotifier: INotifyURLCreateUser) {
-        UseCaseURLCreateUser.emailNotifier = emailNotifier
+        this.emailNotifier = emailNotifier
     }
 
     async sendNotify(urlCreateUser: MURLCreateUser): Promise<[any, MError]> {
@@ -16,7 +16,7 @@ export class UseCaseURLCreateUser implements IUseCaseURLCreateUser {
         }
 
         try {
-            const [info, error] = await UseCaseURLCreateUser.emailNotifier.sendNotify(urlCreateUser)
+            const [info, error] = await this.emailNotifier.sendNotify(urlCreateUser)
             if (!Error.isVoidError(error)) {
                 return ['', error]
             }

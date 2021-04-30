@@ -14,10 +14,10 @@ export class Routes {
     constructor(router: Router, config: MConfiguration, signatures: MSignatures) {
         const auth = new Authentication(signatures)
 
-        new RouterFeedback(router, config)
-        new RouterMailWeb(router, config)
-        new RouterUser(router, config)
-        new RouterURLCreateUser(router, config)
+        new RouterFeedback(router, config, auth)
+        new RouterMailWeb(router, config, auth)
+        new RouterUser(router, config, auth)
+        new RouterURLCreateUser(router, config, auth)
         new RouterFile(router, config, auth)
     }
 }
